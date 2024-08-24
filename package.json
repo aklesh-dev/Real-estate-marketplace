@@ -1,7 +1,7 @@
 {
   "name": "real_state_marketplace",
   "version": "1.0.0",
-  "description": "",
+  "description": "A real estate marketplace API built with Express.js",
   "main": "index.js",
   "type": "module",
   "scripts": {    
