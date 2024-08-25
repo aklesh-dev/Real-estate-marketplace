@@ -10,6 +10,6 @@ export const signUp = async(req, res, next) => {
         res.status(200).json("User saved successfully.");
         
     } catch (error) {
-        res.status(500).json(error);       
+        next(error);     
     }
 };
