@@ -9,12 +9,12 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     version: 1,
-    storage
+    storage,
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableClick: false}),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
 });
 export const persistor = persistStore(store);
