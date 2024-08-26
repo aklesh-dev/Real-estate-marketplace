@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { signinFailure, signinStart, signinSuccess } from "../redux/user/userSlice";
 
 
 const SignIn = () => {
-
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const { error, loading } = useSelector((state)=> state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,8 +19,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(signinStart());
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -29,18 +27,16 @@ const SignIn = () => {
         },
         body: JSON.stringify(formData)
       });
-      const data = await res.json();
-      setLoading(false);
+      const data = await res.json();      
       if (data.success === false) {
-        setError(data.message);
+        dispatch(signinFailure(data.message));
         return;
       };
-      setError(false);
+      dispatch(signinSuccess(data));
       navigate('/');
 
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      dispatch(signinFailure(error));
     }
   };
 
