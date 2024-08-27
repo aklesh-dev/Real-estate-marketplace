@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import logo from '../assets/logo.png';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
+    const { currentUser } = useSelector((state) => state.user);
+
+    
     return (
         <header className='bg-slate-100'>
             <nav aria-label='Main navigation'
@@ -19,15 +23,23 @@ export default function Header() {
                     />
                     <IoSearch aria-hidden='true' className='text-slate-600' />
                 </form>
-                <ul className='flex gap-6'>
+                <ul className='flex items-center gap-6'>
                     <li className='font-semibold hover:underline decoration-2 decoration-dashed decoration-slate-400 p-2 rounded-full transition-all ease-linear'>
                         <Link to="/" aria-label='Go to home page'>Home</Link>
                     </li>
                     <li className='font-semibold hover:underline decoration-2 decoration-dashed decoration-slate-500  p-2 rounded-full transition-all ease-linear'>
                         <Link to="/about" aria-label='Learn more about us'>About</Link>
                     </li>
-                    <li className='font-semibold hover:underline decoration-2 decoration-dashed decoration-sky-400  p-2 rounded-full transition-all ease-linear'>
-                        <Link to="/sign-in" aria-label='Sign in to your account'>Sign In</Link>
+                    <li >
+                        <Link to="/profile" aria-label='Go to profile page'>
+                            {currentUser ? (
+                                <img src={currentUser.avatar} alt="user-img" className='w-7 h-7 rounded-full object-cover' />
+                            ) : (
+                                <div
+                                    className='font-semibold hover:underline decoration-2 decoration-dashed decoration-sky-400  p-2 rounded-full transition-all ease-linear'
+                                >Sign In</div>
+                            )}
+                        </Link>
                     </li>
                 </ul>
             </nav>
