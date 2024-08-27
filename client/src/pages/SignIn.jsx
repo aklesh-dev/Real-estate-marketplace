@@ -67,7 +67,7 @@ const SignIn = () => {
 
         <button
           disabled={loading}
-          className="bg-slate-800 w-[330px] lg:w-2/6 p-2 text-white uppercase rounded-lg hover:opacity-90 disabled:opacity-80 w-">
+          className="bg-slate-800 w-[350px] lg:w-2/6 p-2 text-white uppercase rounded-lg hover:opacity-90 disabled:opacity-80 w-">
           {loading ? 'signing..' : 'sign in'}
         </button>
         <OAuth/>
