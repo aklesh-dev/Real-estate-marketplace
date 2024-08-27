@@ -4,6 +4,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signinFailure, signinStart, signinSuccess } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 
 const SignIn = () => {
@@ -69,6 +70,7 @@ const SignIn = () => {
           className="bg-slate-800 w-[330px] lg:w-2/6 p-2 text-white uppercase rounded-lg hover:opacity-90 disabled:opacity-80 w-">
           {loading ? 'signing..' : 'sign in'}
         </button>
+        <OAuth/>
       </form>
       <div className="flex w-[330px] lg:w-2/6 mx-auto gap-3 mt-5">
         <span className="text-slate-700">Don't have an account ?</span>
