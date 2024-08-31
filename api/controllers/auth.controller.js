@@ -27,7 +27,7 @@ export const signin = async (req, res, next) => {
         const token = jwt.sign({ id: validUser._id}, process.env.JWT_SECRET);
         res.cookie('access_token', token, {
             httpOnly: true,
-            expires: new Date(Date.now()+3600000),
+            // expires: new Date(Date.now()+3600000),
         }).status(201).json(userInfo);
 
     } catch (error) {
@@ -60,7 +60,7 @@ export const google = async (req, res, next) => {
             const { password: PassRM, ...userInfo } = newUser._doc;
             res.cookie('access_token', token, {
                 httpOnly: true,
-                expires: new Date(Date.now()+3600000),
+                // expires: new Date(Date.now()+3600000),
             }).status(201).json(userInfo)
         }
         
