@@ -206,7 +206,7 @@ const Profile = () => {
                 <Link to={`/listing/${currentUser._id}`} className=''>
                   <img src={listing.imageUrls} alt="property image" className='w-20 h-20 object-contain' />
                 </Link>
-                <Link to={`/listing/${currentUser._id}`} className='text-slate-600 font-semibold flex-1 hover:underline truncate'>
+                <Link to={`/listing/${listing._id}`} className='text-slate-600 font-semibold flex-1 hover:underline truncate'>
                   <p>{listing.name}</p>
                 </Link>
 

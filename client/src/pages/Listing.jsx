@@ -5,15 +5,20 @@ import SwiperCore from 'swiper';
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import { FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Contact from "../components/Contact";
 
 
 export default function Listing() {
+    const { currentUser } = useSelector((state) => state.user);
+
     SwiperCore.use([Navigation]);
     const params = useParams();
     const [listing, setListing] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [copied, setCopied] = useState(false);
+    const [contact, setContact] = useState(false);
 
     useEffect(() => {
         const fetchListing = async () => {
@@ -114,6 +119,15 @@ export default function Listing() {
                                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
                             </li>
                         </ul>
+
+                        {
+                            currentUser && listing.userRef !== currentUser._id && !contact && (
+
+                                <button onClick={() => setContact(true)} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">Contact LandLord</button>
+                            )
+                        }
+                        {/* -- when contact is true, the button is hidden and the Contact component is rendered */}
+                        {contact && <Contact listing={listing} />}
 
 
                     </div>
