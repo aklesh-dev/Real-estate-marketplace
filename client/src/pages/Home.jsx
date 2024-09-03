@@ -12,7 +12,7 @@ export default function Home() {
   const [rentListings, setRentListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   SwiperCore.use([Navigation]);
-  console.log(offerListings)
+  
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -86,7 +86,7 @@ export default function Home() {
 
 
       {/* listing results for offer, sale and rent */}
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      <div className="max-w-[90rem] mx-auto p-3 flex flex-col md:pl-8 gap-8 my-10">
         {
           offerListings && offerListings.length > 0 && (
             <div className="">
