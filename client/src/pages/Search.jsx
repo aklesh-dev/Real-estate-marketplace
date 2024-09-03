@@ -15,9 +15,9 @@ export default function Search() {
     });
     const [loading, setLoading] = useState(false);
     const [listings, setListings] = useState([]);
+    const [showMore, setShowMore] = useState(false);
 
-    console.log(listings)
-    
+
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -48,16 +48,22 @@ export default function Search() {
                 order: orderFromUrl || 'desc',
             });
         }
-        
+
 
         const fetchListing = async () => {
 
             try {
                 setLoading(true);
-                const searchQuery = urlParams.toString();                
+                setShowMore(false);
+                const searchQuery = urlParams.toString();
                 const res = await fetch(`/api/listing/get?${searchQuery}`);
                 if (!res.ok) throw new Error('Failed to fetch listings')
-                const data = await res.json();   
+                const data = await res.json();
+                if (data.length > 8) {
+                    setShowMore(true);
+                } else {
+                    setShowMore(false);
+                }
                 setListings(data);
                 setLoading(false);
             } catch (error) {
@@ -96,7 +102,21 @@ export default function Search() {
         urlParams.set('order', sidebarData.order);
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
-        
+
+    };
+
+    const onShowMoreClick = async() => {
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = await res.json();
+        if ( data.length > 9) {
+            setShowMore(false);
+        }
+        setListings([...listings, ...data]);
     };
 
     return <>
@@ -192,6 +212,15 @@ export default function Search() {
                     {!loading && listings && listings.map((listing) => (
                         <ListingItem key={listing._id} listing={listing} />
                     ))}
+
+                    {showMore && (
+                        <button
+                            onClick={() => onShowMoreClick()}
+                            className='text-green-700 p-7 hover:underline'
+                        >
+                            Show More
+                        </button>
+                    )}
 
                 </div>
             </div>
