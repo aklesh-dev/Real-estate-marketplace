@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import ListingItem from '../components/ListingItem';
 
 export default function Search() {
     const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function Search() {
         order: 'desc',
     });
     const [loading, setLoading] = useState(false);
-    const [listing, setListing] = useState([]);
+    const [listings, setListings] = useState([]);
+
+    console.log(listings)
     
 
     useEffect(() => {
@@ -45,20 +48,24 @@ export default function Search() {
                 order: orderFromUrl || 'desc',
             });
         }
+        
 
         const fetchListing = async () => {
+
             try {
                 setLoading(true);
-                const searchQuery = urlParams.toString();
+                const searchQuery = urlParams.toString();                
                 const res = await fetch(`/api/listing/get?${searchQuery}`);
-                const data = await res.json();
-                setListing(data);
+                if (!res.ok) throw new Error('Failed to fetch listings')
+                const data = await res.json();   
+                setListings(data);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
             }
 
-        }
+        };
+
         fetchListing();
 
     }, [location.search]);
@@ -89,6 +96,7 @@ export default function Search() {
         urlParams.set('order', sidebarData.order);
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
+        
     };
 
     return <>
@@ -172,8 +180,20 @@ export default function Search() {
                     <button className='bg-slate-700 text-white p-3 uppercase rounded-lg'>Search</button>
                 </form>
             </div>
-            <div className="">
+            <div className="flex-1">
                 <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing Results:</h1>
+                <div className="p-7 flex gap-3 flex-wrap">
+                    {!loading && listings.length === 0 && (
+                        <p className='text-xl text-slate-700'>No listings found!</p>
+                    )}
+
+                    {loading && <p className='text-center text-xl text-slate-700'>Loading...</p>}
+
+                    {!loading && listings && listings.map((listing) => (
+                        <ListingItem key={listing._id} listing={listing} />
+                    ))}
+
+                </div>
             </div>
         </section>
     </>

@@ -9,7 +9,7 @@ import App from './App.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Router>
@@ -17,5 +17,5 @@ createRoot(document.getElementById('root')).render(
         </Router>
       </PersistGate>
     </Provider>
-  </StrictMode>,
+  // </StrictMode>,
 )
