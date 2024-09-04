@@ -89,7 +89,7 @@ export const getListings = async (req, res, next) => {
             type,
         }).sort({ [sort]: order }).limit(limit).skip(startIndex);
 
-        res.status(200).json(listings);
+        return res.status(200).json(listings);
     } catch (error) {
         next(error);
     }

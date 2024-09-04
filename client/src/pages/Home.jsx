@@ -17,7 +17,10 @@ export default function Home() {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch(`/api/listing/get?offer=true&limit=4`);
+        const res = await fetch(`/api/listing/get?offer=true&limit=4`);        
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await res.json();
         setOfferListings(data);
         fetchRentListing();
@@ -29,6 +32,9 @@ export default function Home() {
     const fetchRentListing = async () => {
       try {
         const res = await fetch('/api/listing/get?type=rent&limit=4');
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await res.json()
         setRentListings(data);
         fetchSaleListing();
@@ -40,6 +46,9 @@ export default function Home() {
     const fetchSaleListing = async () => {
       try {
         const res = await fetch('/api/listing/get?type=sale&limit=4');
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await res.json()
         setSaleListings(data);
       } catch (error) {

@@ -70,6 +70,9 @@ const Profile = () => {
         },
         body: JSON.stringify(formData)
       });
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -80,6 +83,7 @@ const Profile = () => {
       setUpdateSuccess(true);
 
     } catch (error) {
+      console.error(error);
       dispatch(updateUserFailure(error.message));
     }
   };
@@ -90,6 +94,9 @@ const Profile = () => {
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -106,6 +113,9 @@ const Profile = () => {
     try {
       dispatch(signOutStart());
       const res = await fetch('/api/auth/signout');
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await res.json()
       if (data.success === false) {
         dispatch(signOutFailure(data.message));
@@ -121,6 +131,9 @@ const Profile = () => {
     try {
       setShowListingErrors(false);
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await res.json();
       if (data.success === false) {
         setShowListingErrors(true);
@@ -139,6 +152,9 @@ const Profile = () => {
         method: 'DELETE',
 
       });
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await res.json();
       if (data.success === false) {
         console.error(error.message);

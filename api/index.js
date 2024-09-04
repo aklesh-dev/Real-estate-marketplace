@@ -26,17 +26,19 @@ mongoose.connect(process.env.MONGODB)
         console.log("Error connecting to Database:", err);
     }); 
 
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, 'client/dist'))); 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client','dist','index.html'));
-});
+
 
 app.use('/api/user', userRouter); 
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 
 // --middleware
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/client/dist'))); 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client','index.html'));
+});
+
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error"; 
