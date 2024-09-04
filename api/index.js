@@ -2,10 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import path from 'path';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
-import path from 'path';
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB)
     }); 
 
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, '/client/dist'))); 
+app.use(express.static(path.join(__dirname, 'client/dist'))); 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client','dist','index.html'));
 });
